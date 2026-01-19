@@ -10,6 +10,7 @@ TestResults/
 *.suo
 *.userosscache
 *.sln.docstates
+*.code-workspace
 
 # Logs
 *.log
