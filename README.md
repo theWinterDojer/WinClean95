@@ -1,7 +1,7 @@
 # WinClean 95
 
 ## Overview
-WinClean 95 is a Windows desktop cleaner focused on safe, reversible cleanup of known temp, cache, and report files. It enforces strict allowlist/denylist safety rules and defaults to Recycle Bin cleanup to preserve recoverability.
+WinClean 95 is a Windows desktop cleaner focused on safe, reversible cleanup of known temp, cache, and report files. It enforces strict allowlist/denylist safety rules and lets you choose Recycle Bin (reversible) or Permanently Delete during cleanup.
 
 ## Download
 Latest release: https://github.com/theWinterDojer/WinClean95/releases/latest
@@ -43,7 +43,7 @@ Output goes to `./artifacts/publish` (adjust with `-o`).
 - Providers add allowlist roots before scanning.
 - Protected-path denylist remains enforced for system and user roots.
 - Temp roots are validated (must contain Temp/Tmp segment and be unprotected).
-- Default cleanup action is Recycle Bin (reversible delete).
+- Cleanup prompts let you choose Recycle Bin (reversible) or Permanently Delete (irreversible).
 
 ## Platform Notes
 - UI targets Windows (`net8.0-windows`).

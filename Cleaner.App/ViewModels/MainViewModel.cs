@@ -297,8 +297,13 @@ public sealed partial class MainViewModel : ObservableObject
             return;
         }
 
+        var driveList = string.Join(" ", selectedRoots
+            .Select(root => root.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar))
+            .OrderBy(root => root, StringComparer.OrdinalIgnoreCase));
+        var driveLabel = selectedRoots.Count == 1 ? "drive" : "drives";
+
         var confirmation = MessageBox.Show(
-            "Are you sure you want to empty the Recycle Bin and permanently delete all files?",
+            $"Are you sure you want to empty the Recycle Bin for {driveLabel} {driveList} and permanently delete all files?{Environment.NewLine}{Environment.NewLine}Select additional drives below if needed",
             "Empty Recycle Bin",
             MessageBoxButton.YesNo,
             MessageBoxImage.Warning);
@@ -998,7 +1003,7 @@ public sealed partial class MainViewModel : ObservableObject
     private void OpenSystemCleanup()
     {
         var confirmation = MessageBox.Show(
-            "Scan for Windows Disk Cleanup system files?",
+            "Scan for Windows Update files?",
             "System Cleanup",
             MessageBoxButton.YesNo,
             MessageBoxImage.Warning);

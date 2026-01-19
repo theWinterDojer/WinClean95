@@ -1,5 +1,5 @@
 #define MyAppName "WinClean 95"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.1.0"
 #define MyAppPublisher "dojer"
 #define MyAppExeName "Cleaner.App.exe"
 
