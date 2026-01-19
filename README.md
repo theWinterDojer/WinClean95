@@ -3,6 +3,9 @@
 ## Overview
 WinClean 95 is a Windows desktop cleaner focused on safe, reversible cleanup of known temp, cache, and report files. It enforces strict allowlist/denylist safety rules and defaults to Recycle Bin cleanup to preserve recoverability.
 
+## Download
+Latest release: https://github.com/theWinterDojer/WinClean95/releases/latest
+
 ## Tech Stack
 - C#/.NET 8 (WPF)
 - MVVM via CommunityToolkit.Mvvm
