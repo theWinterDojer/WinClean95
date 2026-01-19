@@ -1,0 +1,31 @@
+# Build artifacts
+bin/
+obj/
+artifacts/
+TestResults/
+
+# IDE and user files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# Installer output
+installer/*.exe
+
+# Docs
+docs/agents/
+
+# Temp
+.tmp_test/
+
+# Internal docs
+AGENTS.md
+currentProgress.md
+roadmap.md
+Production_Checklist.md
+improvements.md

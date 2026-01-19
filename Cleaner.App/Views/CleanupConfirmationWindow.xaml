@@ -1,0 +1,186 @@
+<Window x:Class="Cleaner.App.Views.CleanupConfirmationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Review cleanup"
+        Height="640"
+        Width="860"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="{StaticResource AppBackgroundBrush}"
+        Foreground="{StaticResource PrimaryTextBrush}"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        TextOptions.TextFormattingMode="Display">
+    <Border Style="{StaticResource CardBorder}" Margin="16">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Margin="0,0,0,12">
+                <TextBlock Text="Review the cleanup"
+                           Style="{StaticResource SectionHeaderText}" />
+                <TextBlock Text="Only the selected files listed below will be deleted."
+                           Foreground="{StaticResource SecondaryTextBrush}"
+                           Margin="0,4,0,0" />
+            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0" Margin="0,0,12,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0"
+                            Background="{StaticResource Surface2Brush}"
+                            BorderBrush="{StaticResource StrokeBrush}"
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            Padding="12">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Grid.ColumnSpan="2"
+                                       Text="Summary"
+                                       FontWeight="SemiBold"
+                                       Margin="0,0,0,8" />
+
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="0"
+                                       Text="Files selected"
+                                       Foreground="{StaticResource SecondaryTextBrush}" />
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="1"
+                                       Text="{Binding SelectedCount, StringFormat={}{0:N0}}"
+                                       HorizontalAlignment="Right" />
+
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="0"
+                                       Text="Total size"
+                                       Foreground="{StaticResource SecondaryTextBrush}"
+                                       Margin="0,6,0,0" />
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="1"
+                                       Text="{Binding SelectedBytesDisplay}"
+                                       HorizontalAlignment="Right"
+                                       Margin="0,6,0,0" />
+
+                            <TextBlock Grid.Row="3"
+                                       Grid.Column="0"
+                                       Text="Drives affected"
+                                       Foreground="{StaticResource SecondaryTextBrush}"
+                                       Margin="0,6,0,0" />
+                            <TextBlock Grid.Row="3"
+                                       Grid.Column="1"
+                                       Text="{Binding DriveSummary}"
+                                       TextWrapping="Wrap"
+                                       HorizontalAlignment="Right"
+                                       Margin="0,6,0,0" />
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="1"
+                            Style="{StaticResource CardBorder}"
+                            Margin="0,12,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Safety notes"
+                                       FontWeight="SemiBold"
+                                       Margin="0,0,0,8" />
+                            <TextBlock Text="Large selection detected. Deleting many individual files can take a while."
+                                       Foreground="{StaticResource WarningBrush}"
+                                       Margin="0,0,0,6">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ShowLargeSelectionWarning}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock Text="Choose Recycle Bin for reversible cleanup, or Permanently Delete for faster cleanup."
+                                       Foreground="{StaticResource SecondaryTextBrush}" />
+                            <TextBlock Text="Permanent delete is irreversible."
+                                       Foreground="{StaticResource WarningBrush}"
+                                       Margin="0,4,0,0" />
+                            <TextBlock Text="Recent files (&lt;48h) are skipped by safety rules."
+                                       Foreground="{StaticResource SecondaryTextBrush}"
+                                       Margin="0,6,0,0" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Border Grid.Column="1" Style="{StaticResource CardBorder}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Breakdown by category"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,8" />
+                        <DataGrid Grid.Row="1"
+                                  ItemsSource="{Binding CategoryRows}"
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  IsReadOnly="True"
+                                  GridLinesVisibility="None"
+                                  IsTabStop="False"
+                                  Focusable="False">
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Setter Property="IsHitTestVisible" Value="False" />
+                                    <Setter Property="Focusable" Value="False" />
+                                </Style>
+                            </DataGrid.RowStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Category" Binding="{Binding Name}" Width="*" />
+                                <DataGridTextColumn Header="Files" Binding="{Binding Count}" Width="80" />
+                                <DataGridTextColumn Header="Size" Binding="{Binding BytesDisplay}" Width="100" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+                <Button Content="Back"
+                        Width="100"
+                        Margin="0,0,8,0"
+                        IsCancel="True"
+                        Command="{Binding CancelCommand}"
+                        Style="{StaticResource SecondaryActionButton}" />
+                <Button Content="Move to Recycle Bin"
+                        Width="180"
+                        Margin="0,0,8,0"
+                        IsDefault="True"
+                        Command="{Binding MoveToRecycleBinCommand}"
+                        Style="{StaticResource PrimaryActionButton}" />
+                <Button Content="Permanently Delete"
+                        Width="170"
+                        Command="{Binding PermanentlyDeleteCommand}"
+                        Style="{StaticResource WarningActionButton}" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
